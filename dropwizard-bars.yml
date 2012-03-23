@@ -1,0 +1,7 @@
+logging:
+    syslog:
+        enabled: false
+    console:
+        enabled: true
+http:
+    rootPath: "/app/*"
