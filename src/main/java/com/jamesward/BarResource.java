@@ -11,21 +11,36 @@ import java.util.UUID;
 @Path("/")
 public class BarResource {
 
-    private static List<Bar> bars = new ArrayList<Bar>();
-    
-    @GET
-    @Path("/listBars")
-    public List<Bar> listBars() {
-        return bars;
-    }
+  private static List<Bar> bars = new ArrayList<Bar>();
 
-    @POST
-    @Path("/addBar")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Bar addBar(final Bar bar) {
-        bar.id = UUID.randomUUID().toString();
-        bars.add(bar);
-        return bar;
-    }
+  @GET
+  @Produces(MediaType.TEXT_HTML)
+  public String index() {
+    return " <!DOCTYPE html>\n" +
+            "<html>\n" +
+            "<head>\n" +
+            "  <title>dropwizard-bars</title>\n" +
+            "  <script type=\"text/javascript\" src=\"/public/javascripts/jquery.min.js\"></script>\n" +
+            "  <script type=\"text/javascript\" src=\"/content/index.js\"></script>\n" +
+            "</head>\n" +
+            "<body>\n" +
+            "</body>\n" +
+            "</html>";
+  }
+
+  @GET
+  @Path("bars")
+  public List<Bar> listBars() {
+    return bars;
+  }
+
+  @POST
+  @Path("bars")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Bar addBar(final Bar bar) {
+    bar.id = UUID.randomUUID().toString();
+    bars.add(bar);
+    return bar;
+  }
 
 }

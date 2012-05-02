@@ -3,5 +3,3 @@ logging:
         enabled: false
     console:
         enabled: true
-http:
-    rootPath: "/app/*"

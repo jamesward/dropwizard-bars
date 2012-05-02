@@ -1,5 +1,6 @@
 package com.jamesward;
 
+import com.google.common.cache.CacheBuilderSpec;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.bundles.AssetsBundle;
 import com.yammer.dropwizard.config.Configuration;
@@ -13,7 +14,18 @@ public class BarService extends Service<Configuration> {
 
     private BarService() {
         super("bars");
-        addBundle(new AssetsBundle("/assets/", 0, "/"));
+
+        CacheBuilderSpec cacheBuilderSpec = null;
+
+        if (System.getenv("FILE_CACHE_ENABLED") == null) {
+          cacheBuilderSpec = CacheBuilderSpec.parse("maximumSize=0");
+        }
+        else {
+          cacheBuilderSpec = CacheBuilderSpec.parse("maximumSize=100");
+        }
+
+        addBundle(new AssetsBundle("/public/", cacheBuilderSpec, "/public"));
+        addBundle(new AssetsBundle("/content/", cacheBuilderSpec, "/content"));
     }
 
     @Override
