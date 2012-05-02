@@ -16,12 +16,14 @@ public class BarResource {
   @GET
   @Produces(MediaType.TEXT_HTML)
   public String index() {
+    String contentUrl = (System.getenv("CONTENT_URL") != null) ? System.getenv("CONTENT_URL") : "";
+
     return " <!DOCTYPE html>\n" +
             "<html>\n" +
             "<head>\n" +
             "  <title>dropwizard-bars</title>\n" +
-            "  <script type=\"text/javascript\" src=\"/public/javascripts/jquery.min.js\"></script>\n" +
-            "  <script type=\"text/javascript\" src=\"/content/index.js\"></script>\n" +
+            "  <script type=\"text/javascript\" src=\"" + contentUrl + "/public/javascripts/jquery.min.js\"></script>\n" +
+            "  <script type=\"text/javascript\" src=\"" + contentUrl + "/content/index.js\"></script>\n" +
             "</head>\n" +
             "<body>\n" +
             "</body>\n" +
