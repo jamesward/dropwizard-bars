@@ -1,5 +1,5 @@
 function loadBars() {
-    $.get("/bars", function(data) {
+    $.get("/api/bars", function(data) {
         $("#bars").empty()
         $.each(data, function(i, bar) {
             $("#bars").append($("<li>").text("Bar: " + bar.name))
@@ -20,7 +20,7 @@ $(function() {
         $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: "bars",
+            url: "/api/bars",
             data: JSON.stringify({name: $("#barName").val()}),
             dataType: 'json',
             success: loadBars

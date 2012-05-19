@@ -8,41 +8,22 @@ import java.util.UUID;
 
 
 @Produces(MediaType.APPLICATION_JSON)
-@Path("/")
+@Path("/bars")
 public class BarResource {
 
-  private static List<Bar> bars = new ArrayList<Bar>();
+    private static List<Bar> bars = new ArrayList<Bar>();
 
-  @GET
-  @Produces(MediaType.TEXT_HTML)
-  public String index() {
-    String contentUrl = (System.getenv("CONTENT_URL") != null) ? System.getenv("CONTENT_URL") : "";
+    @GET
+    public List<Bar> listBars() {
+        return bars;
+    }
 
-    return " <!DOCTYPE html>\n" +
-            "<html>\n" +
-            "<head>\n" +
-            "  <title>dropwizard-bars</title>\n" +
-            "  <script type=\"text/javascript\" src=\"" + contentUrl + "/public/javascripts/jquery.min.js\"></script>\n" +
-            "  <script type=\"text/javascript\" src=\"" + contentUrl + "/content/index.js\"></script>\n" +
-            "</head>\n" +
-            "<body>\n" +
-            "</body>\n" +
-            "</html>";
-  }
-
-  @GET
-  @Path("bars")
-  public List<Bar> listBars() {
-    return bars;
-  }
-
-  @POST
-  @Path("bars")
-  @Consumes(MediaType.APPLICATION_JSON)
-  public Bar addBar(final Bar bar) {
-    bar.id = UUID.randomUUID().toString();
-    bars.add(bar);
-    return bar;
-  }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Bar addBar(final Bar bar) {
+        bar.id = UUID.randomUUID().toString();
+        bars.add(bar);
+        return bar;
+    }
 
 }

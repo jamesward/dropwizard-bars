@@ -15,17 +15,10 @@ public class BarService extends Service<Configuration> {
     private BarService() {
         super("bars");
 
-        CacheBuilderSpec cacheBuilderSpec = null;
+        CacheBuilderSpec cacheBuilderSpec = (System.getenv("FILE_CACHE_ENABLED") == null) ? CacheBuilderSpec.parse("maximumSize=0") : AssetsBundle.DEFAULT_CACHE_SPEC;
 
-        if (System.getenv("FILE_CACHE_ENABLED") == null) {
-          cacheBuilderSpec = CacheBuilderSpec.parse("maximumSize=0");
-        }
-        else {
-          cacheBuilderSpec = CacheBuilderSpec.parse("maximumSize=100");
-        }
-
+        addBundle(new AssetsBundle("/content/", cacheBuilderSpec, "/"));
         addBundle(new AssetsBundle("/public/", cacheBuilderSpec, "/public"));
-        addBundle(new AssetsBundle("/content/", cacheBuilderSpec, "/content"));
     }
 
     @Override
